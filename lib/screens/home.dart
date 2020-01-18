@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return null;
+    return HomeSUI();
   }
 }
 
@@ -15,22 +15,44 @@ class HomeSUI extends State<HomePage> {
         title: Text('Notes'),
       ),
       body: getListView(context),
+      floatingActionButton: FloatingActionButton(
+        tooltip: "Add new note",
+        child: Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
+        onPressed: () {
+          addNewNote();
+        },
+      ),
     );
   }
 
   Widget getListView(BuildContext context) {
-
-    return ListView.builder(itemBuilder: (context, index){
-      return ListTile(
-        leading: getPriorityIcon(index),
-        title: Text("Dummy title"),
-        trailing: Icon(Icons.delete),
-        onTap: (){
-          //todo
-        },
-      );
-    });
+    return ListView.builder(
+        itemCount: 30,
+        itemBuilder: (context, index) {
+          return Card(
+            elevation: 2,
+            child: ListTile(
+              leading: getPriorityIcon(index),
+              title: Text("Dummy title"),
+              subtitle: Text("Sweet ass subtitles $index"),
+              trailing: Icon(
+                Icons.delete,
+                color: Colors.grey,
+              ),
+              onTap: () {
+                //todo
+              },
+            ),
+          );
+        });
   }
 
-  getPriorityIcon(int index) {}
+  Widget getPriorityIcon(int index) {
+    return null;
+  }
+
+  void addNewNote() {}
 }
