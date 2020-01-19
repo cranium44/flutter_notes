@@ -28,7 +28,7 @@ class AddNoteUI extends State<AddNote> {
           title: Text("Add Note"),
         ),
         body: ListView(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(5.0),
           children: <Widget>[
             DropdownButton(
               items: _priorities.map((String value) {
@@ -40,14 +40,37 @@ class AddNoteUI extends State<AddNote> {
               },
               value: _priority,
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  labelText: "Title",
-                  hintText: "Title of note",
-                  errorStyle: TextStyle(color: Colors.red, fontSize: 12.0)),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    labelText: "Title",
+                    hintText: "Title of note",
+                    errorStyle: TextStyle(color: Colors.red, fontSize: 12.0)),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    labelText: "Contentes",
+                    hintText: "Contents of note",
+                    errorStyle: TextStyle(color: Colors.red, fontSize: 12.0)),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: Row(
+                children: <Widget>[
+
+                ],
+              ),
             )
           ],
         ),
