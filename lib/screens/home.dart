@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_notes/screens/add_note.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class HomeSUI extends State<HomePage> {
           color: Colors.black,
         ),
         onPressed: () {
-          addNewNote();
+          addNewNote(context, "Add Note");
         },
       ),
     );
@@ -43,7 +44,7 @@ class HomeSUI extends State<HomePage> {
                 color: Colors.grey,
               ),
               onTap: () {
-                //todo
+                addNewNote(context, "Edit Note");
               },
             ),
           );
@@ -54,5 +55,9 @@ class HomeSUI extends State<HomePage> {
     return null;
   }
 
-  void addNewNote() {}
+  void addNewNote(BuildContext context, String title) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return AddNote(title);
+    }));
+  }
 }
