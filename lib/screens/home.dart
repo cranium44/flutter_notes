@@ -44,7 +44,7 @@ class HomeSUI extends State<HomePage> {
 
   Widget getListView(BuildContext context) {
     return ListView.builder(
-        itemCount: 30,
+        itemCount: count,
         itemBuilder: (context, index) {
           return Card(
             elevation: 2,
