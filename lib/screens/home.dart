@@ -13,13 +13,17 @@ class HomePage extends StatefulWidget {
 }
 
 class HomeSUI extends State<HomePage> {
-
   DBHelper dbHelper = DBHelper();
   List<Note> noteList;
   int count = 0;
 
   @override
   Widget build(BuildContext context) {
+    if(noteList == null){
+      noteList = List<Note>();
+      updateListView();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Notes'),
@@ -45,12 +49,20 @@ class HomeSUI extends State<HomePage> {
           return Card(
             elevation: 2,
             child: ListTile(
-              leading: getPriorityIcon(index),
-              title: Text("Dummy title"),
-              subtitle: Text("Sweet ass subtitles $index"),
-              trailing: Icon(
-                Icons.delete,
-                color: Colors.grey,
+              leading: CircleAvatar(
+                backgroundColor: getPriorityColor(noteList[index].priority),
+                child: getPriorityIcon(noteList[index].priority),
+              ),
+              title: Text(noteList[index].title),
+              subtitle: Text(noteList[index].date),
+              trailing: GestureDetector(
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.grey,
+                ),
+                onTap: (){
+                  delete(context, noteList[index]);
+                },
               ),
               onTap: () {
                 addNewNote(context, "Edit Note");
@@ -60,15 +72,14 @@ class HomeSUI extends State<HomePage> {
         });
   }
 
-
   void addNewNote(BuildContext context, String title) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return AddNote(title);
     }));
   }
 
-  Color getPriorityColor(int priority){
-    switch(priority){
+  Color getPriorityColor(int priority) {
+    switch (priority) {
       case 1:
         return Colors.red;
         break;
@@ -82,8 +93,8 @@ class HomeSUI extends State<HomePage> {
     }
   }
 
-  Icon getPriorityIcon(int priority){
-    switch(priority){
+  Icon getPriorityIcon(int priority) {
+    switch (priority) {
       case 1:
         return Icon(Icons.play_arrow);
         break;
@@ -97,17 +108,32 @@ class HomeSUI extends State<HomePage> {
     }
   }
 
-  delete(BuildContext context, Note note) async{
+  delete(BuildContext context, Note note) async {
     int res = await dbHelper.deleteNote(note.id);
-    if(res != 0){
+    if (res != 0) {
       showSnackBar(context, "Note deleted Successfuly");
     }
-    // TODO list update
+    //update list
+    updateListView();
   }
 
-
-  showSnackBar(BuildContext context, String message){
-    final snackbar = SnackBar(content: Text(message),);
+  showSnackBar(BuildContext context, String message) {
+    final snackbar = SnackBar(
+      content: Text(message),
+    );
     Scaffold.of(context).showSnackBar(snackbar);
   }
+
+  void updateListView() {
+    final db = dbHelper.initializeDB();
+    db.then((database){
+      var list = dbHelper.getNoteList();
+      list.then((noteList){
+        this.noteList = noteList;
+        this.count = noteList.length;
+      });
+    });
+  }
+
+
 }
