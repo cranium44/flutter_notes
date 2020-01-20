@@ -24,6 +24,7 @@ class AddNoteUI extends State<AddNote> {
   TextEditingController _titleController = new TextEditingController();
   TextEditingController _contentController = new TextEditingController();
 
+  DBHelper _dbHelper = DBHelper();
 
   String title;
   Note note;
@@ -32,7 +33,7 @@ class AddNoteUI extends State<AddNote> {
 
   @override
   void initState() {
-    _priority = _priorities[0];
+    _priority = getPriorityAsString(note.priority);
     super.initState();
   }
 
@@ -117,4 +118,19 @@ class AddNoteUI extends State<AddNote> {
     );
   }
 
+  String getPriorityAsString(int priority){
+    switch(priority){
+      case 1: return _priorities[1];
+      case 2: return _priorities[0];
+      default: return _priorities[0];
+    }
+  }
+  
+  int getStringPriorityAsInt(String str){
+    switch(str){
+      case "Low": return 2;
+      case "High": return 1;
+      default: return 2;
+    }
+  }
 }
