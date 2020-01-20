@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
@@ -25,7 +24,7 @@ class DBHelper {
     return _dbHelper;
   }
 
-  static DBHelper getInstance() {}
+  DBHelper.getInstance();
 
   void _createDB(Database db, int version) async {
     await db.execute(
