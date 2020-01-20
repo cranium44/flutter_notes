@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes/screens/add_note.dart';
+import 'dart:async';
+import 'package:flutter_notes/utils/db_utils.dart';
+import 'package:flutter_notes/models/notes.dart';
+import 'package:sqflite/sqflite.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,6 +13,11 @@ class HomePage extends StatefulWidget {
 }
 
 class HomeSUI extends State<HomePage> {
+
+  DBHelper dbHelper = DBHelper();
+  List<Note> noteList;
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

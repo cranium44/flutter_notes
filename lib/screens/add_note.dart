@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:flutter_notes/utils/db_utils.dart';
+import 'package:flutter_notes/models/notes.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:intl/intl.dart';
 
 class AddNote extends StatefulWidget {
   String title;
@@ -17,6 +22,8 @@ class AddNoteUI extends State<AddNote> {
   var _priority = "";
   TextEditingController _titleController = new TextEditingController();
   TextEditingController _contentController = new TextEditingController();
+
+  Da
 
   String title;
 
