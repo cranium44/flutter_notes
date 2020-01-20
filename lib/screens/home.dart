@@ -36,7 +36,7 @@ class HomeSUI extends State<HomePage> {
           color: Colors.black,
         ),
         onPressed: () {
-          addNewNote(context, "Add Note");
+          addNewNote(context, "Add Note", Note('','', 2));
         },
       ),
     );
@@ -65,16 +65,16 @@ class HomeSUI extends State<HomePage> {
                 },
               ),
               onTap: () {
-                addNewNote(context, "Edit Note");
+                addNewNote(context, "Edit Note", noteList[index]);
               },
             ),
           );
         });
   }
 
-  void addNewNote(BuildContext context, String title) {
+  void addNewNote(BuildContext context, String title, Note note) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return AddNote(title);
+      return AddNote(note, title);
     }));
   }
 

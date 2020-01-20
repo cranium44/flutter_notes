@@ -6,14 +6,15 @@ import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
 
 class AddNote extends StatefulWidget {
-  String title;
+  final String title;
+  final Note note;
 
-  AddNote(this.title);
+  AddNote(this.note, this.title);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return AddNoteUI(title);
+    return AddNoteUI(note, title);
   }
 }
 
@@ -25,8 +26,9 @@ class AddNoteUI extends State<AddNote> {
 
 
   String title;
+  Note note;
 
-  AddNoteUI(this.title);
+  AddNoteUI(this.note, this.title);
 
   @override
   void initState() {
