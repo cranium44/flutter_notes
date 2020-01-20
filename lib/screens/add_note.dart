@@ -115,33 +115,4 @@ class AddNoteUI extends State<AddNote> {
     );
   }
 
-  Color getPriorityColor(int priority){
-    switch(priority){
-      case 1:
-        return Colors.red;
-        break;
-
-      case 2:
-        return Colors.yellow;
-        break;
-
-      default:
-        return Colors.yellow;
-    }
-  }
-
-  Icon getPriorityIcon(int priority){
-    switch(priority){
-      case 1:
-        return Icon(Icons.play_arrow);
-        break;
-
-      case 2:
-        return Icon(Icons.keyboard_arrow_right);
-        break;
-
-      default:
-        return Icon(Icons.keyboard_arrow_right);
-    }
-  }
 }

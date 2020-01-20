@@ -60,13 +60,45 @@ class HomeSUI extends State<HomePage> {
         });
   }
 
-  Widget getPriorityIcon(int index) {
-    return null;
-  }
 
   void addNewNote(BuildContext context, String title) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return AddNote(title);
     }));
   }
+
+  Color getPriorityColor(int priority){
+    switch(priority){
+      case 1:
+        return Colors.red;
+        break;
+
+      case 2:
+        return Colors.yellow;
+        break;
+
+      default:
+        return Colors.yellow;
+    }
+  }
+
+  Icon getPriorityIcon(int priority){
+    switch(priority){
+      case 1:
+        return Icon(Icons.play_arrow);
+        break;
+
+      case 2:
+        return Icon(Icons.keyboard_arrow_right);
+        break;
+
+      default:
+        return Icon(Icons.keyboard_arrow_right);
+    }
+  }
+
+  delete(BuildContext context, Note note) async{
+    int res = await dbHelper.deleteNote(note.id);
+  }
+
 }
