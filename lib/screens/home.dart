@@ -99,6 +99,15 @@ class HomeSUI extends State<HomePage> {
 
   delete(BuildContext context, Note note) async{
     int res = await dbHelper.deleteNote(note.id);
+    if(res != 0){
+      showSnackBar(context, "Note deleted Successfuly");
+    }
+    // TODO list update
   }
 
+
+  showSnackBar(BuildContext context, String message){
+    final snackbar = SnackBar(content: Text(message),);
+    Scaffold.of(context).showSnackBar(snackbar);
+  }
 }
