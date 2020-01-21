@@ -72,10 +72,14 @@ class HomeSUI extends State<HomePage> {
         });
   }
 
-  void addNewNote(BuildContext context, String title, Note note) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
+  void addNewNote(BuildContext context, String title, Note note) async{
+    bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return AddNote(note, title);
     }));
+
+    if(result){
+      updateListView();
+    }
   }
 
   Color getPriorityColor(int priority) {

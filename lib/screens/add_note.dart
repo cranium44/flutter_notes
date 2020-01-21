@@ -124,7 +124,7 @@ class AddNoteUI extends State<AddNote> {
                     child: RaisedButton(
                       color: Theme.of(context).primaryColor,
                       onPressed: () {
-                        Navigator.pop(context);
+                        clear();
                       },
                       child: Icon(
                         Icons.cancel,
@@ -196,6 +196,10 @@ class AddNoteUI extends State<AddNote> {
   void showAlertDialog(String s, String t) {
     AlertDialog dialog = AlertDialog(title: Text(s),content: Text(t),);
     showDialog(context: context, builder: (_)=>dialog);
+  }
+
+  goBackToPrevious(){
+    Navigator.pop(context, true);
   }
 
 }
