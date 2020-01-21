@@ -180,6 +180,17 @@ class AddNoteUI extends State<AddNote> {
     }else{
       showAlertDialog('Status', 'Saved Successfuly');
     }
+
+    //cleanup
+    clear();
+  }
+
+  clear(){
+    setState(() {
+      _titleController.text = '';
+      _contentController.text = '';
+      _priority = getPriorityAsString(10);
+    });
   }
 
   void showAlertDialog(String s, String t) {
