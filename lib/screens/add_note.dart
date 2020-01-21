@@ -53,19 +53,21 @@ class AddNoteUI extends State<AddNote> {
               child: DropdownButton(
                 items: _priorities.map((String value) {
                   return DropdownMenuItem<String>(
-                      value: value, child: Text(getPriorityAsString(note.priority)));
+                      value: value, child: Text(value));
                 }).toList(),
                 onChanged: (String value) {
                   setState(() {
                     _priority = value;
+                    note.priority = getStringPriorityAsInt(value);
                   });
                 },
-                value: _priority,
+                value: getPriorityAsString(note.priority),
               ),
             ),
             Padding(
               padding: EdgeInsets.all(5),
               child: TextFormField(
+                controller: _titleController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
@@ -73,16 +75,27 @@ class AddNoteUI extends State<AddNote> {
                     labelText: "Title",
                     hintText: "Title of note",
                     errorStyle: TextStyle(color: Colors.red, fontSize: 12.0)),
+                onChanged: (String value){
+                  setState(() {
+                    note.title = _titleController.text;
+                  });
+                },
               ),
             ),
             Padding(
               padding: EdgeInsets.all(5),
               child: TextFormField(
+                controller: _contentController,
+                onChanged: (String value){
+                  setState(() {
+                    note.contents = _contentController.text;
+                  });
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                     ),
-                    labelText: "Contentes",
+                    labelText: "Contents",
                     hintText: "Contents of note",
                     errorStyle: TextStyle(color: Colors.red, fontSize: 12.0)),
               ),
@@ -96,11 +109,7 @@ class AddNoteUI extends State<AddNote> {
                       color: Theme.of(context).primaryColor,
                       onPressed: () {
                         setState(() {
-                          note.title = _titleController.text;
-                          note.contents = _contentController.text;
-                          note.priority = getStringPriorityAsInt(_priority);
-                          note.date = DateTime.now().toString();
-
+                          note.date = getDateAsString();
                           saveNote(note);
                         });
                       },
@@ -146,6 +155,13 @@ class AddNoteUI extends State<AddNote> {
       case "High": return 1;
       default: return 2;
     }
+  }
+
+  String getDateAsString(){
+    var now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    String formattedDate = formatter.format(now);
+    return formattedDate;
   }
 
   saveNote(Note note){
