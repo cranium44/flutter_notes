@@ -16,25 +16,25 @@ class Note{
   int get priority => _priority;
 
   //setters
-  setTitle(String title){
+  set title(String title){
     if(title.length <= 255 && title.isNotEmpty){
       this._title = title;
     }
   }
 
-  setContent(String contents){
+  set content(String contents){
     if(title.length <= 255 && title.isNotEmpty){
       this._contents = contents;
     }
   }
 
-  setDate(String date){
+  set date(String date){
     if(title.length <= 255 && title.isNotEmpty){
       this._date = date;
     }
   }
 
-  setPriority(int priority){
+  set priority(int priority){
     if(priority>=1 && priority<= 2){
       this._priority = priority;
     }
