@@ -110,7 +110,7 @@ class AddNoteUI extends State<AddNote> {
                       onPressed: () {
                         setState(() {
                           note.date = getDateAsString();
-                          saveNote(note);
+                          save();
                         });
                       },
                       child: Icon(
@@ -141,6 +141,7 @@ class AddNoteUI extends State<AddNote> {
     );
   }
 
+
   String getPriorityAsString(int priority){
     switch(priority){
       case 1: return _priorities[1];
@@ -164,14 +165,26 @@ class AddNoteUI extends State<AddNote> {
     return formattedDate;
   }
 
-  saveNote(Note note){
-    final db = _dbHelper.initializeDB();
-    db.then((database){
-      var res = _dbHelper.insertNote(note);
-      res.then((res){
-        debugPrint(res.toString());
-      });
-    });
+  save() async{
+    int result;
+    //check if update or insert
+    if(note.id == null){
+      result = await _dbHelper.insertNote(note);
+    }else{
+      result = await _dbHelper.updateNote(note);
+    }
+
+    //status of operation
+    if(result != 0){
+      showAlertDialog('Status', 'Saved Successfuly');
+    }else{
+      showAlertDialog('Status', 'Saved Successfuly');
+    }
+  }
+
+  void showAlertDialog(String s, String t) {
+    AlertDialog dialog = AlertDialog(title: Text(s),content: Text(t),);
+    showDialog(context: context, builder: (_)=>dialog);
   }
 
 }
