@@ -22,7 +22,7 @@ class Note{
     }
   }
 
-  set content(String contents){
+  set contents(String contents){
     if(title.length <= 255 && title.isNotEmpty){
       this._contents = contents;
     }
