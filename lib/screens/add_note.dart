@@ -40,105 +40,112 @@ class AddNoteUI extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: ListView(
-          padding: EdgeInsets.all(5.0),
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(5.0),
-              child: DropdownButton(
-                items: _priorities.map((String value) {
-                  return DropdownMenuItem<String>(
-                      value: value, child: Text(value));
-                }).toList(),
-                onChanged: (String value) {
-                  setState(() {
-                    _priority = value;
-                    note.priority = getStringPriorityAsInt(value);
-                  });
-                },
-                value: getPriorityAsString(note.priority),
+    return WillPopScope(
+        onWillPop: (){
+          goBackToPrevious();
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(icon: Icon(Icons.arrow_back),
+            onPressed: (){
+              goBackToPrevious();
+            },),
+            title: Text(title),
+          ),
+          body: ListView(
+            padding: EdgeInsets.all(5.0),
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(5.0),
+                child: DropdownButton(
+                  items: _priorities.map((String value) {
+                    return DropdownMenuItem<String>(
+                        value: value, child: Text(value));
+                  }).toList(),
+                  onChanged: (String value) {
+                    setState(() {
+                      _priority = value;
+                      note.priority = getStringPriorityAsInt(value);
+                    });
+                  },
+                  value: getPriorityAsString(note.priority),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: TextFormField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    labelText: "Title",
-                    hintText: "Title of note",
-                    errorStyle: TextStyle(color: Colors.red, fontSize: 12.0)),
-                onChanged: (String value){
-                  setState(() {
-                    note.title = _titleController.text;
-                  });
-                },
+              Padding(
+                padding: EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      labelText: "Title",
+                      hintText: "Title of note",
+                      errorStyle: TextStyle(color: Colors.red, fontSize: 12.0)),
+                  onChanged: (String value){
+                    setState(() {
+                      note.title = _titleController.text;
+                    });
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: TextFormField(
-                controller: _contentController,
-                onChanged: (String value){
-                  setState(() {
-                    note.contents = _contentController.text;
-                  });
-                },
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    labelText: "Contents",
-                    hintText: "Contents of note",
-                    errorStyle: TextStyle(color: Colors.red, fontSize: 12.0)),
+              Padding(
+                padding: EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: _contentController,
+                  onChanged: (String value){
+                    setState(() {
+                      note.contents = _contentController.text;
+                    });
+                  },
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      labelText: "Contents",
+                      hintText: "Contents of note",
+                      errorStyle: TextStyle(color: Colors.red, fontSize: 12.0)),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(5.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        setState(() {
-                          note.date = getDateAsString();
-                          save();
-                        });
-                      },
-                      child: Icon(
-                        Icons.save,
-                        color: Colors.black,
+              Padding(
+                padding: EdgeInsets.all(5.0),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: RaisedButton(
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          setState(() {
+                            note.date = getDateAsString();
+                            save();
+                          });
+                        },
+                        child: Icon(
+                          Icons.save,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(width: 20,),
-                  Expanded(
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        clear();
-                      },
-                      child: Icon(
-                        Icons.cancel,
-                        color: Colors.black,
+                    Container(width: 20,),
+                    Expanded(
+                      child: RaisedButton(
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          clear();
+                        },
+                        child: Icon(
+                          Icons.cancel,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
   }
 
 
