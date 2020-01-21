@@ -13,7 +13,6 @@ class AddNote extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return AddNoteUI(note, title);
   }
 }
@@ -34,6 +33,8 @@ class AddNoteUI extends State<AddNote> {
   @override
   void initState() {
     _priority = getPriorityAsString(note.priority);
+    _titleController.text = note.title;
+    _contentController.text = note.contents;
     super.initState();
   }
 
@@ -52,10 +53,12 @@ class AddNoteUI extends State<AddNote> {
               child: DropdownButton(
                 items: _priorities.map((String value) {
                   return DropdownMenuItem<String>(
-                      value: value, child: Text(value));
+                      value: value, child: Text(getPriorityAsString(note.priority)));
                 }).toList(),
                 onChanged: (String value) {
-                  setState(() {});
+                  setState(() {
+                    _priority = value;
+                  });
                 },
                 value: _priority,
               ),
@@ -91,7 +94,16 @@ class AddNoteUI extends State<AddNote> {
                   Expanded(
                     child: RaisedButton(
                       color: Theme.of(context).primaryColor,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          note.title = _titleController.text;
+                          note.contents = _contentController.text;
+                          note.priority = getStringPriorityAsInt(_priority);
+                          note.date = DateTime.now().toString();
+
+                          saveNote(note);
+                        });
+                      },
                       child: Icon(
                         Icons.save,
                         color: Colors.black,
@@ -102,7 +114,9 @@ class AddNoteUI extends State<AddNote> {
                   Expanded(
                     child: RaisedButton(
                       color: Theme.of(context).primaryColor,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: Icon(
                         Icons.cancel,
                         color: Colors.black,
@@ -133,4 +147,15 @@ class AddNoteUI extends State<AddNote> {
       default: return 2;
     }
   }
+
+  saveNote(Note note){
+    final db = _dbHelper.initializeDB();
+    db.then((database){
+      var res = _dbHelper.insertNote(note);
+      res.then((res){
+        debugPrint(res.toString());
+      });
+    });
+  }
+
 }
