@@ -174,6 +174,8 @@ class AddNoteUI extends State<AddNote> {
 
   save() async{
     int result;
+
+    goBackToPrevious();
     //check if update or insert
     if(note.id == null){
       result = await _dbHelper.insertNote(note);
